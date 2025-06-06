@@ -10,13 +10,15 @@ TERM_WIDTH = 80
 try:
     # Get terminal width if supported
     from shutil import get_terminal_size
+
     TERM_WIDTH = get_terminal_size().columns
 except (ImportError, AttributeError):
     pass
 
+
 def is_interactive_terminal() -> bool:
     """Check if we're running in an interactive terminal."""
-    return hasattr(sys.stdout, 'isatty') and sys.stdout.isatty()
+    return hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
 
 
 class NyanReporter:
@@ -61,34 +63,46 @@ class NyanReporter:
     RESTORE_CURSOR = "\033[u"
 
     # Rainbow colors for the trail
-    RAINBOW_COLORS = [
-        "red", "yellow", "green", "cyan", "blue", "magenta"
-    ]
+    RAINBOW_COLORS = ["red", "yellow", "green", "cyan", "blue", "magenta"]
 
-    # Nyan cat frames
+    # Nyan cat frames with consistent head position and moving paws
     NYAN_FRAMES = [
-        # Frame 1
+        # Frame 1 - running position 1
         [
-            "≈≈≈≈≈≈≈≈≈≈≈≈≈≈",
-            "≈≈≈≈≈≈≈≈≈≈≈≈≈≈",
-            "╭━━━━╮┈┈┈┈┈┈┈┈",
-            "┃ ∩ ∩ ┃┈┊┊┈┈┈┈",
-            "┃∪(◕ᴥ◕)∪┊┊┈┈┈",
-            "┃┈ ┈ ┈┃┊┊┈┈┈┈",
-            "┃┈ ┈ ┈┃┊┊▃▃┈┈",
-            "┗━━━━━┻━━━━━┈┈",
+            "≈≈╭━━━━━━━━━━━━╮",
+            "≈╭┫♥ * ♥ * ♥ * ┣╮ ╮",
+            "≈┃┃ ♥ * ♥ * ♥ *(^ᴥ^)",
+            "≈-┫* ♥ * ♥ * ♥ ┣╯",
+            "≈≈╰━━━━┳━━━━━┳━╯",
+            "≈≈≈≈≈≈╰┛    ╰┛",
         ],
-        # Frame 2
+        # Frame 2 - running position 2
         [
-            "≈≈≈≈≈≈≈≈≈≈≈≈≈≈",
-            "≈≈≈≈≈≈≈≈≈≈≈≈≈≈",
-            "┈┈┈┈┈┈┈┈╭━━━━╮",
-            "┈┈┈┈┈┈┊┊┃ ∩ ∩ ┃",
-            "┈┈┈┈┈┊┊∪(◕ᴥ◕)∪",
-            "┈┈┈┈┈┊┊┃┈ ┈ ┈┃",
-            "┈┈┈▃▃┊┊┃┈ ┈ ┈┃",
-            "┈┈┈━━━━━┻━━━━┛",
-        ]
+            "≈≈╭━━━━━━━━━━━━╮",
+            "≈╭┫ ♥ * ♥ * ♥ *┣╮ ╮",
+            "≈┃┃* ♥ * ♥ * ♥ ┃(^ᴥ^)",
+            "≈-┫♥ * ♥ * ♥ * ┣╯",
+            "≈≈╰━┳━━━━━━━━┳━╯",
+            "≈≈≈≈╰┛      ╰┛",
+        ],
+        # Frame 3 - running position 3
+        [
+            "≈≈╭━━━━━━━━━━━━╮",
+            "≈╭┫* ♥ * ♥ * ♥ ┣╮ ╮",
+            "≈┃┃♥ * ♥ * ♥ * ┃(^ᴥ^)",
+            "≈-┫ ♥ * ♥ * ♥ *┣ ",
+            "≈≈╰━┳━━━━━┳━━━━╯",
+            "≈≈≈╰┛    ╰┛    ",
+        ],
+        # Frame 4 - running position 4
+        [
+            "≈≈╭━━━━━━━━━━━━╮",
+            "≈╭┫* ♥ * ♥ * ♥ ┣╮ ╮",
+            "≈┃┃ ♥ * ♥ * ♥ *┃(^ᴥ^)",
+            "≈-┫* ♥ * ♥ * ♥ ┣╯",
+            "≈≈╰━┳━━━━━━━━┳━╯",
+            "≈≈≈≈╰┛      ╰┛",
+        ],
     ]
 
     def __init__(self, config: pytest.Config) -> None:
@@ -103,12 +117,14 @@ class NyanReporter:
         self.failed = 0
         self.skipped = 0
         self.total = 0
-        
+
         # Animation state
         self.tick = 0
         self.trail_length = 0
-        self.max_trail_length = max(0, self.width - 20)  # Reserve space for cat
-        
+        self.max_trail_length = max(
+            0, self.width - 24
+        )  # Reserve more space for wider cat
+
         self.started = False
         self.finished = False
 
@@ -116,7 +132,7 @@ class NyanReporter:
         """Configure the plugin."""
         if self.nyan_only:
             # Unregister other reporters
-            standard_reporter = config.pluginmanager.getplugin('terminalreporter')
+            standard_reporter = config.pluginmanager.getplugin("terminalreporter")
             if standard_reporter:
                 config.pluginmanager.unregister(standard_reporter)
 
@@ -124,10 +140,10 @@ class NyanReporter:
         """Called after collection is finished."""
         self.total = len(session.items)
         if self.interactive:
-            for _ in range(10):  # Reserve 10 lines for the nyan cat display
+            for _ in range(12):  # Reserve more lines for the taller nyan cat display
                 sys.stdout.write("\n")
             # Move cursor back up and save position
-            sys.stdout.write(self.UP.format(10))
+            sys.stdout.write(self.UP.format(12))
             sys.stdout.write(self.SAVE_CURSOR)
             sys.stdout.flush()
             self.started = True
@@ -161,23 +177,37 @@ class NyanReporter:
         # Frame animation
         frame = self.NYAN_FRAMES[self.tick % len(self.NYAN_FRAMES)]
         self.tick += 1
-        
+
         # Restore cursor position and clear screen
         sys.stdout.write(self.RESTORE_CURSOR)
         sys.stdout.write(self.CLEAR_SCREEN)
-        
+
         # Draw rainbow trail and nyan cat
         for i, line in enumerate(frame):
             rainbow_segment = ""
-            if 2 <= i <= 6:  # Draw rainbow only on middle lines
+            if 0 <= i <= 8:  # Draw rainbow on all body lines including paws
                 for j in range(self.trail_length):
                     color_idx = (j + i + self.tick) % len(self.RAINBOW_COLORS)
                     color = self.RAINBOW_COLORS[color_idx]
                     rainbow_segment += f"{self.COLORS[color]}={self.COLORS['reset']}"
-            
-            # Print the line with rainbow trail
-            sys.stdout.write(f"{rainbow_segment}{line}\n")
-        
+
+            # Apply colors to specific characters in the line
+            colored_line = ""
+            for char in line:
+                if char == "♥":
+                    colored_line += (
+                        f"{self.COLORS['bright_magenta']}{char}{self.COLORS['reset']}"
+                    )
+                elif char == "*":
+                    colored_line += (
+                        f"{self.COLORS['bright_yellow']}{char}{self.COLORS['reset']}"
+                    )
+                else:
+                    colored_line += char
+
+            # Print the line with rainbow trail and colored characters
+            sys.stdout.write(f"{rainbow_segment}{colored_line}\n")
+
         # Print stats
         status = (
             f"Tests: {self.passed + self.failed + self.skipped}/{self.total} "
@@ -185,49 +215,77 @@ class NyanReporter:
         )
         sys.stdout.write(f"\n{status}\n")
         sys.stdout.flush()
-        
+
         # Slow down animation to reduce CPU usage
         time.sleep(0.1)
 
     def pytest_terminal_summary(self, terminalreporter: Any, exitstatus: int) -> None:
         """Called at the end of the test session."""
         self.finished = True
-        
+
         if self.interactive:
-            # Print final status
+            # Print the final frame with full rainbow and status
             sys.stdout.write(self.RESTORE_CURSOR)
             sys.stdout.write(self.CLEAR_SCREEN)
-            
+
+            # Draw a victory frame with full rainbow
+            frame = self.NYAN_FRAMES[0]  # Use the first frame for the final display
+
+            # Set trail length to maximum for a complete rainbow
+            self.trail_length = self.max_trail_length
+
+            # Draw rainbow trail and final nyan cat
+            for i, line in enumerate(frame):
+                rainbow_segment = ""
+                if 0 <= i <= 8:  # Draw rainbow on all body lines including paws
+                    for j in range(self.trail_length):
+                        color_idx = (j + i) % len(self.RAINBOW_COLORS)
+                        color = self.RAINBOW_COLORS[color_idx]
+                        rainbow_segment += (
+                            f"{self.COLORS[color]}={self.COLORS['reset']}"
+                        )
+
+                # Apply colors to specific characters in the line
+                colored_line = ""
+                for char in line:
+                    if char == "♥":
+                        colored_line += f"{self.COLORS['bright_magenta']}{char}{self.COLORS['reset']}"
+                    elif char == "*":
+                        colored_line += f"{self.COLORS['bright_yellow']}{char}{self.COLORS['reset']}"
+                    else:
+                        colored_line += char
+
+                # Print the line with rainbow trail and colored characters
+                sys.stdout.write(f"{rainbow_segment}{colored_line}\n")
+
+            # Print final status below the cat
             result = "passed" if exitstatus == 0 else "failed"
             color = "green" if exitstatus == 0 else "red"
             status = (
                 f"{self.COLORS[color]}Tests {result}!{self.COLORS['reset']} "
                 f"✅ {self.passed} ❌ {self.failed} ⏭️  {self.skipped}"
             )
-            sys.stdout.write(f"{status}\n\n")
+            sys.stdout.write(f"\n{status}\n")
             sys.stdout.flush()
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
     """Add nyan-cat options to pytest."""
     group = parser.getgroup("nyan", "nyan cat reporting")
+    group.addoption("--nyan", action="store_true", help="Enable nyan cat output")
     group.addoption(
-        "--nyan", 
-        action="store_true", 
-        help="Enable nyan cat output"
+        "--nyan-only",
+        action="store_true",
+        help="Enable nyan cat output and disable default reporter",
     )
-    group.addoption(
-        "--nyan-only", 
-        action="store_true", 
-        help="Enable nyan cat output and disable default reporter"
-    )
+
 
 def pytest_configure(config: pytest.Config) -> None:
     """Configure the pytest session."""
     # Only register if the option is enabled
     nyan_option = config.getoption("--nyan")
     nyan_only = config.getoption("--nyan-only")
-    
+
     if nyan_option or nyan_only:
         try:
             nyan_reporter = NyanReporter(config)
@@ -235,5 +293,6 @@ def pytest_configure(config: pytest.Config) -> None:
         except Exception as e:
             # Provide better error handling
             import sys
+
             print(f"Error initializing nyan-pytest reporter: {e}", file=sys.stderr)
             raise
