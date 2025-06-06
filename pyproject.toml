@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "A nyan-cat inspired test reporter for pytest"
 readme = "README.md"
 requires-python = ">=3.8"
-license = {text = "MIT"}
+license = "MIT"
 authors = [{ name = "mrilikecoding" }]
 classifiers = [
   "Development Status :: 3 - Alpha",
