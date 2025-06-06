@@ -57,10 +57,15 @@ jobs:
       env:
         PYPI_TEST_API_KEY: ${{ secrets.PYPI_TEST_API_KEY }}
       run: |
-        # Check if package exists on TestPyPI
-        if pip install --index-url https://test.pypi.org/simple/ nyan-pytest==0.1.0 &> /dev/null; then
-          echo "Package version already exists on TestPyPI, skipping upload"
+        # Get current version from pyproject.toml
+        PACKAGE_VERSION=$(grep "version" pyproject.toml | sed -E 's/version = "([0-9]+\.[0-9]+\.[0-9]+)"/\1/g' | tr -d ' "')
+        echo "Testing version: $PACKAGE_VERSION"
+        
+        # Try to install current version from TestPyPI to check if it exists
+        if pip install --index-url https://test.pypi.org/simple/ nyan-pytest==$PACKAGE_VERSION &> /dev/null; then
+          echo "Package version $PACKAGE_VERSION already exists on TestPyPI, skipping upload"
         else
+          echo "Uploading version $PACKAGE_VERSION to TestPyPI..."
           twine upload --repository testpypi dist/* -u __token__ -p $PYPI_TEST_API_KEY --verbose
           echo "Successfully uploaded to TestPyPI"
         fi
@@ -70,10 +75,15 @@ jobs:
       env:
         PYPI_API_KEY: ${{ secrets.PYPI_API_KEY }}
       run: |
-        # Check if package exists on PyPI
-        if pip install nyan-pytest==0.1.0 &> /dev/null; then
-          echo "Package version already exists on PyPI, skipping upload"
+        # Get current version from pyproject.toml
+        PACKAGE_VERSION=$(grep "version" pyproject.toml | sed -E 's/version = "([0-9]+\.[0-9]+\.[0-9]+)"/\1/g' | tr -d ' "')
+        echo "Publishing version: $PACKAGE_VERSION"
+        
+        # Try to install current version from PyPI to check if it exists
+        if pip install nyan-pytest==$PACKAGE_VERSION &> /dev/null; then
+          echo "Package version $PACKAGE_VERSION already exists on PyPI, skipping upload"
         else
+          echo "Uploading version $PACKAGE_VERSION to PyPI..."
           twine upload dist/* -u __token__ -p $PYPI_API_KEY --verbose
           echo "Successfully uploaded to PyPI"
         fi
