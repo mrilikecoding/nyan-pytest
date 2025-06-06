@@ -117,7 +117,8 @@ class NyanReporter:
         if self.nyan_only:
             # Unregister other reporters
             standard_reporter = config.pluginmanager.getplugin('terminalreporter')
-            config.pluginmanager.unregister(standard_reporter)
+            if standard_reporter:
+                config.pluginmanager.unregister(standard_reporter)
 
     def pytest_collection_finish(self, session: pytest.Session) -> None:
         """Called after collection is finished."""
@@ -228,5 +229,11 @@ def pytest_configure(config: pytest.Config) -> None:
     nyan_only = config.getoption("--nyan-only")
     
     if nyan_option or nyan_only:
-        nyan_reporter = NyanReporter(config)
-        config.pluginmanager.register(nyan_reporter, "nyan-reporter")
+        try:
+            nyan_reporter = NyanReporter(config)
+            config.pluginmanager.register(nyan_reporter, "nyan-reporter")
+        except Exception as e:
+            # Provide better error handling
+            import sys
+            print(f"Error initializing nyan-pytest reporter: {e}", file=sys.stderr)
+            raise
