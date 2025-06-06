@@ -2,6 +2,8 @@
 
 A nyan-cat inspired pytest runner that displays test results with a colorful nyan cat animation.
 
+Requires Python 3.8 or higher.
+
 ## Installation
 
 ```bash
