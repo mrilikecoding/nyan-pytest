@@ -4,16 +4,18 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'src/**'
-      - 'tests/**'
-      - 'pyproject.toml'
-      - 'setup.py'
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
   workflow_dispatch:  # Enables manual trigger from GitHub UI
 
 jobs:
   test-build-and-publish:
     name: Test, build and publish Python package
+    # Only run on merged PRs or direct pushes to main
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     strategy:
       matrix:
