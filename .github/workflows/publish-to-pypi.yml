@@ -51,7 +51,11 @@ jobs:
     
     - name: Check package
       if: ${{ matrix.python-version == '3.10' }}
-      run: twine check dist/*
+      run: |
+        echo "::group::Package Contents"
+        ls -la dist/
+        twine check dist/*
+        echo "::endgroup::"
     
     - name: Publish to TestPyPI
       if: ${{ matrix.python-version == '3.10' }}
@@ -59,33 +63,34 @@ jobs:
       env:
         PYPI_TEST_API_KEY: ${{ secrets.PYPI_TEST_API_KEY }}
       run: |
+        echo "::group::TestPyPI Upload"
         # Get current version from pyproject.toml
-        PACKAGE_VERSION=$(grep "version" pyproject.toml | sed -E 's/version = "([0-9]+\.[0-9]+\.[0-9]+)"/\1/g' | tr -d ' "')
+        PACKAGE_VERSION=$(grep 'version = ' pyproject.toml | sed -E 's/.*version = "([^"]+)".*/\1/')
         echo "Testing version: $PACKAGE_VERSION"
         
-        # Try to install current version from TestPyPI to check if it exists
-        if pip install --index-url https://test.pypi.org/simple/ nyan-pytest==$PACKAGE_VERSION &> /dev/null; then
-          echo "Package version $PACKAGE_VERSION already exists on TestPyPI, skipping upload"
-        else
-          echo "Uploading version $PACKAGE_VERSION to TestPyPI..."
-          twine upload --repository testpypi dist/* -u __token__ -p $PYPI_TEST_API_KEY --verbose
-          echo "Successfully uploaded to TestPyPI"
-        fi
+        echo "Uploading version $PACKAGE_VERSION to TestPyPI..."
+        twine upload --repository testpypi dist/* -u __token__ -p $PYPI_TEST_API_KEY --verbose || echo "TestPyPI upload failed, but continuing workflow"
+        echo "::endgroup::"
     
+    - name: Debug Variables
+      if: ${{ matrix.python-version == '3.10' }}
+      run: |
+        echo "GitHub Event Name: ${{ github.event_name }}"
+        echo "GitHub Ref: ${{ github.ref }}"
+        echo "GitHub Head Ref: ${{ github.head_ref }}"
+        echo "GitHub Base Ref: ${{ github.base_ref }}"
+        echo "Matrix Python Version: ${{ matrix.python-version }}"
+
     - name: Publish to PyPI
-      if: ${{ matrix.python-version == '3.10' && success() }}
+      if: ${{ matrix.python-version == '3.10' }}
       env:
         PYPI_API_KEY: ${{ secrets.PYPI_API_KEY }}
       run: |
+        echo "::group::PyPI Upload"
         # Get current version from pyproject.toml
-        PACKAGE_VERSION=$(grep "version" pyproject.toml | sed -E 's/version = "([0-9]+\.[0-9]+\.[0-9]+)"/\1/g' | tr -d ' "')
+        PACKAGE_VERSION=$(grep 'version = ' pyproject.toml | sed -E 's/.*version = "([^"]+)".*/\1/')
         echo "Publishing version: $PACKAGE_VERSION"
         
-        # Try to install current version from PyPI to check if it exists
-        if pip install nyan-pytest==$PACKAGE_VERSION &> /dev/null; then
-          echo "Package version $PACKAGE_VERSION already exists on PyPI, skipping upload"
-        else
-          echo "Uploading version $PACKAGE_VERSION to PyPI..."
-          twine upload dist/* -u __token__ -p $PYPI_API_KEY --verbose
-          echo "Successfully uploaded to PyPI"
-        fi
+        echo "Uploading version $PACKAGE_VERSION to PyPI..."
+        twine upload dist/* -u __token__ -p $PYPI_API_KEY --verbose
+        echo "::endgroup::"
