@@ -12,10 +12,9 @@ on:
   workflow_dispatch:  # Enables manual trigger from GitHub UI
 
 jobs:
-  test-build-and-publish:
-    name: Test, build and publish Python package
-    # Only run on merged PRs or direct pushes to main
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+  # First job: Test across all Python versions
+  test:
+    name: Test on Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -34,73 +33,77 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        # Install a specific version of setuptools that works across all Python versions
         pip install setuptools==68.0.0
-        pip install pytest pytest-cov build twine
-        # Ignore deprecation warnings during installation
-        pip install . --no-warn-script-location
+        pip install pytest pytest-cov
+        pip install .
     
     - name: Run tests
       run: |
         pytest tests/ -v
 
-    # Only build and publish once if tests pass across all Python versions
-    - name: Build package
-      if: ${{ matrix.python-version == '3.10' }}
-      run: python -m build
+  # Second job: Build and publish (only if tests pass)
+  build-and-publish:
+    name: Build and publish package
+    needs: test  # This job runs only after the test job completes successfully
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+    runs-on: ubuntu-latest
     
-    - name: Check package
-      if: ${{ matrix.python-version == '3.10' }}
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"  # Use a stable Python version for building
+    
+    - name: Install dependencies
       run: |
-        echo "::group::Package Contents"
-        ls -la dist/
-        twine check dist/*
-        echo "::endgroup::"
+        python -m pip install --upgrade pip
+        pip install setuptools==68.0.0 build twine
     
-    - name: Publish to TestPyPI
-      if: ${{ matrix.python-version == '3.10' }}
-      id: testpypi
-      env:
-        PYPI_TEST_API_KEY: ${{ secrets.PYPI_TEST_API_KEY }}
-      run: |
-        echo "::group::TestPyPI Upload"
-        # Get current version from pyproject.toml
-        PACKAGE_VERSION=$(grep 'version = ' pyproject.toml | sed -E 's/.*version = "([^"]+)".*/\1/')
-        echo "Testing version: $PACKAGE_VERSION"
-        
-        echo "Uploading version $PACKAGE_VERSION to TestPyPI..."
-        # Ensure password is properly passed (must be quoted if empty)
-        if [ -z "$PYPI_TEST_API_KEY" ]; then
-          echo "WARNING: PYPI_TEST_API_KEY is empty"
-        else
-          twine upload --repository testpypi dist/* -u "__token__" -p "$PYPI_TEST_API_KEY" --verbose || echo "TestPyPI upload failed, but continuing workflow"
-        fi
-        echo "::endgroup::"
-    
-    - name: Debug Variables
-      if: ${{ matrix.python-version == '3.10' }}
+    - name: Debug variables
       run: |
         echo "GitHub Event Name: ${{ github.event_name }}"
         echo "GitHub Ref: ${{ github.ref }}"
         echo "GitHub Head Ref: ${{ github.head_ref }}"
         echo "GitHub Base Ref: ${{ github.base_ref }}"
-        echo "Matrix Python Version: ${{ matrix.python-version }}"
+        echo "Will publish to PyPI after build"
+    
+    - name: Build package
+      run: |
+        python -m build
+        echo "Package contents:"
+        ls -la dist/
+        twine check dist/*
+      
+    - name: Extract version
+      id: get_version
+      run: |
+        VERSION=$(grep 'version = ' pyproject.toml | sed -E 's/.*version = "([^"]+)".*/\1/')
+        echo "package_version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Building version: $VERSION"
+
+    - name: Publish to TestPyPI
+      env:
+        PYPI_TEST_API_KEY: ${{ secrets.PYPI_TEST_API_KEY }}
+      run: |
+        echo "Uploading version ${{ steps.get_version.outputs.package_version }} to TestPyPI..."
+        if [ -z "$PYPI_TEST_API_KEY" ]; then
+          echo "WARNING: PYPI_TEST_API_KEY is empty, skipping TestPyPI upload"
+        else
+          twine upload --repository testpypi dist/* -u "__token__" -p "$PYPI_TEST_API_KEY" --verbose || echo "TestPyPI upload failed, continuing workflow"
+        fi
 
     - name: Publish to PyPI
-      if: ${{ matrix.python-version == '3.10' && github.event_name != 'pull_request' }}
       env:
         PYPI_API_KEY: ${{ secrets.PYPI_API_KEY }}
       run: |
-        echo "::group::PyPI Upload"
-        # Get current version from pyproject.toml
-        PACKAGE_VERSION=$(grep 'version = ' pyproject.toml | sed -E 's/.*version = "([^"]+)".*/\1/')
-        echo "Publishing version: $PACKAGE_VERSION"
-        
-        echo "Uploading version $PACKAGE_VERSION to PyPI..."
-        # Ensure password is properly passed (must be quoted if empty)
+        echo "Uploading version ${{ steps.get_version.outputs.package_version }} to PyPI..."
         if [ -z "$PYPI_API_KEY" ]; then
           echo "ERROR: PYPI_API_KEY is empty"
           exit 1
         fi
+        
         twine upload dist/* -u "__token__" -p "$PYPI_API_KEY" --verbose
-        echo "::endgroup::"
+        echo "Successfully published to PyPI"
