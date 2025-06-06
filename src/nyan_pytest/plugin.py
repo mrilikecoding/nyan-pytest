@@ -67,41 +67,101 @@ class NyanReporter:
 
     # Nyan cat frames with consistent head position and moving paws
     NYAN_FRAMES = [
-        # Frame 1 - running position 1
         [
             "≈≈╭━━━━━━━━━━━━╮",
-            "≈╭┫♥ * ♥ * ♥ * ┣╮ ╮",
-            "≈┃┃ ♥ * ♥ * ♥ *(^ᴥ^)",
-            "≈-┫* ♥ * ♥ * ♥ ┣╯",
-            "≈≈╰━━━━┳━━━━━┳━╯",
-            "≈≈≈≈≈≈╰┛    ╰┛",
+            "≈╭┫ ♥ * ♥ * ♥ *┃ ╮ ╮",
+            "≈┃┃* ♥ * ♥ * ♥ ┃(^ᴥ^)",
+            "≈-┫ ♥ * ♥ * ♥ *┣╯",
+            "≈≈╰━━━━━━━━━━━━╯",
+            "≈≈≈  ╰┛ ╰┛ ╰┛ ╰┛",
         ],
-        # Frame 2 - running position 2
+        [
+            "≈≈≈╭━━━━━━━━━━━━╮",
+            "≈≈╭┫ ♥ * ♥ * ♥ *┃ ╮ ╮",
+            "≈≈┃┃* ♥ * ♥ * ♥ ┃(^ᴥ^)",
+            "≈≈-┫ ♥ * ♥ * ♥ *┣╯",
+            "≈≈≈╰━━━━━━━━━━━━╯",
+            "≈≈≈≈╰┛ ╰┛  ╰┛ ╰┛",
+        ],
+        [
+            "≈≈≈≈╭━━━━━━━━━━━━╮",
+            "≈≈≈╭┫ ♥ * ♥ * ♥ *┣╮ ╮",
+            "≈≈≈┃┃* ♥ * ♥ * ♥ (^ᴥ^)",
+            "≈≈≈-┫ ♥ * ♥ * ♥ *┣ ",
+            "≈≈≈≈╰━━━━━━━━━━━━╯",
+            "≈≈≈≈≈╰┛ ╰┛ ╰┛ ╰┛",
+        ],
+        [
+            "≈≈≈≈≈╭━━━━━━━━━━━━╮",
+            "≈≈≈≈╭┫ ♥ * ♥ * ♥ *┣╮ ╮",
+            "≈≈≈≈┃┃* ♥ * ♥ * ♥ (^ᴥ^)",
+            "≈≈≈≈-┫ ♥ * ♥ * ♥ *┣╯",
+            "≈≈≈≈≈╰━━━━━━━━━━━━╯",
+            "≈≈≈≈≈╰┛ ╰┛  ╰┛ ╰┛",
+        ],
+        [
+            "≈≈≈≈≈≈╭━━━━━━━━━━━━╮",
+            "≈≈≈≈≈╭┫ ♥ * ♥ * ♥ *┃ ╮ ╮",
+            "≈≈≈≈≈┃┃* ♥ * ♥ * ♥ ┃(^ᴥ^)",
+            "≈≈≈≈≈-┫ ♥ * ♥ * ♥ *┣╯",
+            "≈≈≈≈≈≈╰━━━━━━━━━━━━╯",
+            "≈≈≈≈≈≈  ╰┛ ╰┛ ╰┛ ╰┛",
+        ],
+        [
+            "≈≈≈≈≈≈╭━━━━━━━━━━━━╮",
+            "≈≈≈≈≈╭┫ ♥ * ♥ * ♥ *┃ ╮ ╮",
+            "≈≈≈≈≈┃┃* ♥ * ♥ * ♥ ┃(^ᴥ^)",
+            "≈≈≈≈≈-┫ ♥ * ♥ * ♥ *┣╯",
+            "≈≈≈≈≈≈╰━━━━━━━━━━━━╯",
+            "≈≈≈≈≈≈≈ ╰┛ ╰┛  ╰┛ ╰┛",
+        ],
+        [
+            "≈≈≈≈≈≈╭━━━━━━━━━━━━╮",
+            "≈≈≈≈≈╭┫ ♥ * ♥ * ♥ *┣╮ ╮",
+            "≈≈≈≈≈┃┃* ♥ * ♥ * ♥ (^ᴥ^)",
+            "≈≈≈≈≈-┫ ♥ * ♥ * ♥ *┣ ",
+            "≈≈≈≈≈≈╰━━━━━━━━━━━━╯",
+            "≈≈≈≈≈≈≈╰┛ ╰┛ ╰┛ ╰┛",
+        ],
+        [
+            "≈≈≈≈≈≈╭━━━━━━━━━━━━╮",
+            "≈≈≈≈≈╭┫ ♥ * ♥ * ♥ *┣╮ ╮",
+            "≈≈≈≈≈┃┃* ♥ * ♥ * ♥ (^ᴥ^)",
+            "≈≈≈≈≈-┫ ♥ * ♥ * ♥ *┣╯",
+            "≈≈≈≈≈≈╰━━━━━━━━━━━━╯",
+            "≈≈≈≈≈≈╰┛ ╰┛  ╰┛ ╰┛",
+        ],
+        [
+            "≈≈≈≈≈≈╭━━━━━━━━━━━━╮",
+            "≈≈≈≈≈╭┫ ♥ * ♥ * ♥ *┃ ╮ ╮",
+            "≈≈≈≈≈┃┃* ♥ * ♥ * ♥ ┃(^ᴥ^)",
+            "≈≈≈≈≈-┫ ♥ * ♥ * ♥ *┣╯",
+            "≈≈≈≈≈≈╰━━━━━━━━━━━━╯",
+            "≈≈≈≈≈≈  ╰┛ ╰┛ ╰┛ ╰┛",
+        ],
+        [
+            "≈≈≈≈≈╭━━━━━━━━━━━━╮",
+            "≈≈≈≈╭┫ ♥ * ♥ * ♥ *┃ ╮ ╮",
+            "≈≈≈≈┃┃* ♥ * ♥ * ♥ ┃(^ᴥ^)",
+            "≈≈≈≈-┫ ♥ * ♥ * ♥ *┣╯",
+            "≈≈≈≈≈╰━━━━━━━━━━━━╯",
+            "≈≈≈≈≈≈ ╰┛ ╰┛  ╰┛ ╰┛",
+        ],
+        [
+            "≈≈≈╭━━━━━━━━━━━━╮",
+            "≈≈╭┫ ♥ * ♥ * ♥ *┣╮ ╮",
+            "≈≈┃┃* ♥ * ♥ * ♥ (^ᴥ^)",
+            "≈≈-┫ ♥ * ♥ * ♥ *┣ ",
+            "≈≈≈╰━━━━━━━━━━━━╯",
+            "≈≈≈≈╰┛ ╰┛ ╰┛ ╰┛",
+        ],
         [
             "≈≈╭━━━━━━━━━━━━╮",
             "≈╭┫ ♥ * ♥ * ♥ *┣╮ ╮",
-            "≈┃┃* ♥ * ♥ * ♥ ┃(^ᴥ^)",
-            "≈-┫♥ * ♥ * ♥ * ┣╯",
-            "≈≈╰━┳━━━━━━━━┳━╯",
-            "≈≈≈≈╰┛      ╰┛",
-        ],
-        # Frame 3 - running position 3
-        [
-            "≈≈╭━━━━━━━━━━━━╮",
-            "≈╭┫* ♥ * ♥ * ♥ ┣╮ ╮",
-            "≈┃┃♥ * ♥ * ♥ * ┃(^ᴥ^)",
-            "≈-┫ ♥ * ♥ * ♥ *┣ ",
-            "≈≈╰━┳━━━━━┳━━━━╯",
-            "≈≈≈╰┛    ╰┛    ",
-        ],
-        # Frame 4 - running position 4
-        [
-            "≈≈╭━━━━━━━━━━━━╮",
-            "≈╭┫* ♥ * ♥ * ♥ ┣╮ ╮",
-            "≈┃┃ ♥ * ♥ * ♥ *┃(^ᴥ^)",
-            "≈-┫* ♥ * ♥ * ♥ ┣╯",
-            "≈≈╰━┳━━━━━━━━┳━╯",
-            "≈≈≈≈╰┛      ╰┛",
+            "≈┃┃* ♥ * ♥ * ♥ (^ᴥ^)",
+            "≈-┫ ♥ * ♥ * ♥ *┣╯",
+            "≈≈╰━━━━━━━━━━━━╯",
+            "≈≈╰┛ ╰┛  ╰┛ ╰┛",
         ],
     ]
 
@@ -278,6 +338,13 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         action="store_true",
         help="Enable nyan cat output and disable default reporter",
     )
+    group.addoption(
+        "--nyan-sim",
+        metavar="NUM_TESTS",
+        type=int,
+        default=0,
+        help="Simulate nyan cat animation with specified number of tests",
+    )
 
 
 def pytest_configure(config: pytest.Config) -> None:
@@ -285,14 +352,80 @@ def pytest_configure(config: pytest.Config) -> None:
     # Only register if the option is enabled
     nyan_option = config.getoption("--nyan")
     nyan_only = config.getoption("--nyan-only")
+    nyan_sim = config.getoption("--nyan-sim")
 
-    if nyan_option or nyan_only:
+    if nyan_option or nyan_only or nyan_sim > 0:
         try:
             nyan_reporter = NyanReporter(config)
             config.pluginmanager.register(nyan_reporter, "nyan-reporter")
+
+            # If simulation mode is enabled, register a plugin with a session hook
+            if nyan_sim > 0:
+
+                class SimulationPlugin:
+                    @staticmethod
+                    def pytest_sessionstart(session):
+                        simulate_tests(session, nyan_sim, nyan_reporter)
+
+                config.pluginmanager.register(SimulationPlugin(), "nyan-simulation")
+
         except Exception as e:
             # Provide better error handling
             import sys
 
             print(f"Error initializing nyan-pytest reporter: {e}", file=sys.stderr)
             raise
+
+
+def simulate_tests(session, num_tests, reporter):
+    """Simulate test execution for the nyan cat animation."""
+    import time
+    import random
+
+    # Set total number of tests for the reporter
+    reporter.total = num_tests
+
+    # Notify that we're starting simulation
+    print(f"\nSimulating {num_tests} tests for nyan cat animation...")
+    time.sleep(1)  # Give time for message to be read
+
+    # Start reporter's display
+    reporter.started = True
+
+    # Simulate test results with random outcomes
+    for i in range(num_tests):
+        # Create a mock report
+        class MockReport:
+            def __init__(self):
+                self.when = "call"
+                r = random.random()
+                if r < 0.85:  # 85% pass rate
+                    self.passed = True
+                    self.failed = False
+                    self.skipped = False
+                elif r < 0.95:  # 10% failure rate
+                    self.passed = False
+                    self.failed = True
+                    self.skipped = False
+                else:  # 5% skip rate
+                    self.passed = False
+                    self.failed = False
+                    self.skipped = True
+
+        # Update reporter with mock report
+        reporter.pytest_runtest_logreport(MockReport())
+
+        # Slow down simulation to make it visible (faster than real tests would run)
+        time.sleep(0.02)
+
+    # Let the animation complete
+    time.sleep(1)
+
+    # Signal the end
+    print(
+        f"\nSimulation complete! {reporter.passed} passed, {reporter.failed} failed, {reporter.skipped} skipped"
+    )
+
+    # Exit pytest - we don't want to run actual tests in simulation mode
+    session.exitstatus = 0
+    exit(0)
