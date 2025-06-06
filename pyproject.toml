@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nyan_pytest"
-version = "0.1.1"
+version = "0.1.2"
 description = "A nyan-cat inspired test reporter for pytest"
 readme = "README.md"
 requires-python = ">=3.8"
