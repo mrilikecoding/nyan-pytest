@@ -57,12 +57,23 @@ jobs:
       env:
         PYPI_TEST_API_KEY: ${{ secrets.PYPI_TEST_API_KEY }}
       run: |
-        twine upload --repository testpypi dist/* -u __token__ -p $PYPI_TEST_API_KEY
-        echo "Successfully uploaded to TestPyPI"
+        # Check if package exists on TestPyPI
+        if pip install --index-url https://test.pypi.org/simple/ nyan-pytest==0.1.0 &> /dev/null; then
+          echo "Package version already exists on TestPyPI, skipping upload"
+        else
+          twine upload --repository testpypi dist/* -u __token__ -p $PYPI_TEST_API_KEY --verbose
+          echo "Successfully uploaded to TestPyPI"
+        fi
     
     - name: Publish to PyPI
       if: ${{ matrix.python-version == '3.10' && success() }}
       env:
         PYPI_API_KEY: ${{ secrets.PYPI_API_KEY }}
       run: |
-        twine upload dist/* -u __token__ -p $PYPI_API_KEY
+        # Check if package exists on PyPI
+        if pip install nyan-pytest==0.1.0 &> /dev/null; then
+          echo "Package version already exists on PyPI, skipping upload"
+        else
+          twine upload dist/* -u __token__ -p $PYPI_API_KEY --verbose
+          echo "Successfully uploaded to PyPI"
+        fi

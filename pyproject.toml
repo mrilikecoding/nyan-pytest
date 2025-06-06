@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nyan_pytest"
-version = "0.1.0"
+version = "0.1.1"
 description = "A nyan-cat inspired test reporter for pytest"
 readme = "README.md"
 requires-python = ">=3.8"
-license = "MIT"
+license = { text = "MIT" }
 authors = [{ name = "mrilikecoding" }]
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -26,4 +26,3 @@ dependencies = ["pytest>=6.0.0"]
 
 [project.entry-points."pytest11"]
 nyan = "nyan_pytest.plugin"
-
