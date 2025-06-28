@@ -428,4 +428,5 @@ def simulate_tests(session, num_tests, reporter):
 
     # Exit pytest - we don't want to run actual tests in simulation mode
     session.exitstatus = 0
-    exit(0)
+    # Use pytest's proper exit mechanism instead of raw exit()
+    pytest.exit("Simulation complete", returncode=0)

@@ -1,35 +1,205 @@
-# Nyan Pytest
+# Nyan Pytest 🐱‍🚀
 
-A nyan-cat inspired pytest runner that displays test results with a colorful nyan cat animation.
+A delightful nyan-cat inspired pytest plugin that displays test results with a colorful nyan cat animation and rainbow trail.
 
-Requires Python 3.8 or higher.
+![Python](https://img.shields.io/badge/python-3.8%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-## Installation
+## ✨ Features
+
+- 🌈 **Animated rainbow trail** that grows with test progress
+- 🐱 **Adorable nyan cat** with paw animations
+- 📊 **Real-time test statistics** (passed, failed, skipped)
+- 🎨 **Full color support** with ANSI escape codes
+- 🖥️ **Terminal compatibility** for both interactive and non-interactive environments
+- ⚡ **Performance optimized** for smooth animations
+
+## 🚀 Installation
 
 ```bash
 pip install nyan-pytest
 ```
 
-## Usage
+For development:
 
-Run pytest with the `--nyan` option:
+```bash
+git clone https://github.com/your-repo/nyan-pytest
+cd nyan-pytest
+make setup
+```
+
+## 🎮 Usage
+
+### Basic Usage
+
+Run pytest with nyan cat alongside standard output:
 
 ```bash
 pytest --nyan
 ```
 
-### Options
+Use only nyan cat (cleaner output):
 
-- `--nyan` - Use the nyan cat reporter alongside the default reporter
-- `--nyan-only` - Use only the nyan cat reporter
+```bash
+pytest --nyan-only
+```
 
-## Features
+### Demo Mode
 
-- Colorful nyan cat animation during test execution
-- Rainbow trail that grows with test progress
-- Test statistics display
-- Support for both interactive and non-interactive terminals
+Want to see nyan cat in action? Try the simulation mode:
 
-## License
+```bash
+# Quick demo with 20 simulated tests
+pytest --nyan-sim 20
 
-MIT
+# Epic demo with 100 tests
+pytest --nyan-sim 100
+```
+
+### Makefile Commands
+
+This project includes a comprehensive Makefile for development:
+
+```bash
+# Show all available commands
+make help
+
+# Run tests with nyan cat
+make test-nyan
+
+# Quick demo
+make demo
+
+# Epic party mode! 🎉
+make party
+
+# Performance benchmarking
+make benchmark
+
+# Development setup
+make setup
+```
+
+## 🎯 Command Line Options
+
+| Option         | Description                                              |
+| -------------- | -------------------------------------------------------- |
+| `--nyan`       | Enable nyan cat reporter alongside default pytest output |
+| `--nyan-only`  | Use only nyan cat reporter (no standard pytest output)   |
+| `--nyan-sim N` | Simulate N tests to demo the animation                   |
+
+## 🎨 What You'll See
+
+When running tests, you'll see:
+
+```
+≈≈≈≈≈≈╭━━━━━━━━━━━━╮
+≈≈≈≈≈╭┫ ♥ * ♥ * ♥ *┃ ╮ ╮
+≈≈≈≈≈┃┃* ♥ * ♥ * ♥ ┃(^ᴥ^)
+≈≈≈≈≈-┫ ♥ * ♥ * ♥ *┣╯
+≈≈≈≈≈≈╰━━━━━━━━━━━━╯
+≈≈≈≈≈≈  ╰┛ ╰┛ ╰┛ ╰┛
+
+Tests: 15/20 ✅ 12 ❌ 2 ⏭️ 1
+```
+
+- 🌈 **Rainbow trail** (`≈` characters) grows as tests complete
+- 🎭 **Animated cat body** with hearts (♥) and stars (\*)
+- 🐾 **Moving paws** that animate during test execution
+- 📈 **Live statistics** showing progress and results
+
+## 🛠️ Development
+
+### Quick Start
+
+```bash
+# Clone and setup
+git clone <repo-url>
+cd nyan-pytest
+make setup
+
+# Run tests
+make test-nyan
+
+# Check code quality
+make lint
+
+# Try the demo
+make demo
+```
+
+### Available Make Commands
+
+| Command            | Description                  |
+| ------------------ | ---------------------------- |
+| `make setup`       | Install dev dependencies     |
+| `make test-nyan`   | Run tests with nyan output   |
+| `make demo`        | Demo with 20 simulated tests |
+| `make performance` | Run performance benchmarks   |
+| `make lint`        | Check code quality           |
+| `make format`      | Format code                  |
+| `make build`       | Build package                |
+| `make clean`       | Clean build artifacts        |
+
+## 🎪 Examples
+
+### Running Your Test Suite
+
+```bash
+# Standard pytest with nyan enhancement
+pytest tests/ --nyan -v
+
+# Clean nyan-only output
+pytest tests/ --nyan-only
+
+# Verbose mode with test details
+pytest tests/ --nyan -v -s
+```
+
+### Performance Testing
+
+```bash
+# Benchmark nyan vs standard reporter
+make benchmark
+
+# Time the plugin performance
+make performance
+```
+
+### Demo Modes
+
+```bash
+# Quick 10-test demo
+make demo-fast
+
+# Standard 20-test demo
+make demo
+
+# Longer 50-test demo
+make demo-slow
+
+# Epic 100-test party! 🎉
+make party
+```
+
+## 🔧 Requirements
+
+- Python 3.8+
+- pytest 6.0.0+
+- Terminal with ANSI color support (most modern terminals)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature-name`
+3. Make your changes and add tests
+4. Run the full test suite: `make full-check`
+5. Submit a pull request
+
+## 📝 License
+
+MIT License - see LICENSE file for details.
+
+## 🎉 Credits
+
+Inspired by the original Nyan Cat. This one's for the ktties.
