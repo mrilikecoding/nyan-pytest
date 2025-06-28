@@ -1,16 +1,6 @@
 # Nyan Pytest
 
-> Nyan Cat has always existed to bring happiness to people everywhere.
-
-_PRGuitarman - creator of NyanCat_
-
-> Everybody... Everybody... Everybody wants to be a CAT!
-
-_The Aristocats_
-
 A delightful [nyan-cat](https://www.youtube.com/watch?v=2yJgwwDcgV8i) inspired pytest plugin that displays test results with a colorful nyan cat animation and rainbow trail.
-
-Nyan Cat is a delightful cat with a poptart body flying through space! What could be finer?
 
 ```
 ====================================================================≈≈≈≈≈≈╭━━━━━━━━━━━━╮
@@ -24,6 +14,14 @@ Tests: 42/50 ✅ 38 ❌ 3 ⏭️ 1
 ```
 
 _Nyan cat flying through your test results with a beautiful rainbow trail!_
+
+> Nyan Cat has always existed to bring happiness to people everywhere.
+
+_PRGuitarman - creator of NyanCat_
+
+> Everybody... Everybody... Everybody wants to be a CAT!
+
+_The Aristocats_
 
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
