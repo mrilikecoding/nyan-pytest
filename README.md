@@ -3,17 +3,17 @@
 A delightful nyan-cat inspired pytest plugin that displays test results with a colorful nyan cat animation and rainbow trail.
 
 ```
-========================================================================≈≈≈≈≈≈╭━━━━━━━━━━━━╮
-======================================================================≈≈≈≈≈╭┫ ♥ * ♥ * ♥ *┃ ╮ ╮
+====================================================================≈≈≈≈≈≈╭━━━━━━━━━━━━╮
+====================================================================≈≈≈≈≈╭┫ ♥ * ♥ * ♥ *┃ ╮ ╮
 ====================================================================≈≈≈≈≈┃┃* ♥ * ♥ * ♥ ┃(^ᴥ^)
 ====================================================================≈≈≈≈≈-┫ ♥ * ♥ * ♥ *┣╯
-======================================================================≈≈≈≈≈≈╰━━━━━━━━━━━━╯
-========================================================================≈≈≈≈≈≈  ╰┛ ╰┛ ╰┛ ╰┛
+====================================================================≈≈≈≈≈≈╰━━━━━━━━━━━━╯
+====================================================================≈≈≈≈≈≈  ╰┛ ╰┛ ╰┛ ╰┛
 
 Tests: 42/50 ✅ 38 ❌ 3 ⏭️ 1
 ```
 
-*Nyan cat flying through your test results with a beautiful rainbow trail!*
+_Nyan cat flying through your test results with a beautiful rainbow trail!_
 
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -104,22 +104,22 @@ make setup
 
 ## 🎯 Command Line Options
 
-| Option            | Description                                              |
-| ----------------- | -------------------------------------------------------- |
-| `--nyan`          | Enable nyan cat reporter alongside default pytest output |
-| `--nyan-only`     | Use only nyan cat reporter (no standard pytest output)   |
-| `--nyan-sim N`    | Simulate N tests to demo the animation                   |
-| `--nyan-speed N`  | Animation speed (1=fastest, 6=default, 100=slowest)     |
+| Option           | Description                                              |
+| ---------------- | -------------------------------------------------------- |
+| `--nyan`         | Enable nyan cat reporter alongside default pytest output |
+| `--nyan-only`    | Use only nyan cat reporter (no standard pytest output)   |
+| `--nyan-sim N`   | Simulate N tests to demo the animation                   |
+| `--nyan-speed N` | Animation speed (1=fastest, 6=default, 100=slowest)      |
 
 ### 🎛️ Speed Guide
 
-| Speed Range | Best For | Description |
-|-------------|----------|-------------|
-| 1-3 | Fast unit tests | Quick visual feedback, minimal distraction |
-| 4-8 | Regular development | Good balance of visibility and speed (default: 6) |
-| 10-25 | Watching tests run | Comfortable viewing during test execution |
-| 30-60 | Relaxed development | Slow, enjoyable animation for longer test suites |
-| 70-100 | Demos & presentations | Very slow, perfect for showing off to colleagues! |
+| Speed Range | Best For              | Description                                       |
+| ----------- | --------------------- | ------------------------------------------------- |
+| 1-3         | Fast unit tests       | Quick visual feedback, minimal distraction        |
+| 4-8         | Regular development   | Good balance of visibility and speed (default: 6) |
+| 10-25       | Watching tests run    | Comfortable viewing during test execution         |
+| 30-60       | Relaxed development   | Slow, enjoyable animation for longer test suites  |
+| 70-100      | Demos & presentations | Very slow, perfect for showing off to colleagues! |
 
 ## 🎨 What You'll See
 
@@ -224,7 +224,7 @@ Nyan cat adds visual joy to your testing workflow with minimal impact on develop
 ### Benchmark Results
 
 | Test Count | Standard | Nyan Cat | Overhead | % Slower |
-|------------|----------|----------|----------|----------|
+| ---------- | -------- | -------- | -------- | -------- |
 | 10 tests   | 0.18s    | 2.41s    | +2.23s   | +1225%   |
 | 100 tests  | 1.26s    | 3.52s    | +2.27s   | +181%    |
 | 1000 tests | 11.97s   | 14.31s   | +2.33s   | +20%     |
@@ -238,13 +238,15 @@ Nyan cat adds visual joy to your testing workflow with minimal impact on develop
 ### When to Use Nyan Cat
 
 ✅ **Perfect for:**
+
 - **Development workflows** - Makes test-watching enjoyable
 - **Medium to large test suites** - 20-180% overhead on 100-1000 tests
-- **CI/CD pipelines** - Minimal time vs overall build/deploy phases  
+- **CI/CD pipelines** - Minimal time vs overall build/deploy phases
 - **Demo environments** - Delights stakeholders and team members
 - **Any project where developer happiness matters**
 
 ✅ **Why the overhead is worth it:**
+
 - **Developer motivation** - Transforms boring test runs into engaging experiences
 - **Visual progress feedback** - Clear, delightful indication of test execution
 - **Team morale boost** - Brings smiles to code reviews, standups, and demos
