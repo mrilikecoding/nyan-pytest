@@ -15,7 +15,7 @@ Tests: 42/50 ✅ 38 ❌ 3 ⏭️ 1
 
 _Nyan cat flying through your test results with a beautiful rainbow trail!_
 
-## IFKYK
+## IFYKYK
 
 > Nyan Cat has always existed to bring happiness to people everywhere.
 
