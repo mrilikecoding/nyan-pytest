@@ -45,7 +45,7 @@ Inspired by the original [Nyan Cat](https://knowyourmeme.com/memes/nyan-cat). Th
 pip install nyan-pytest
 ```
 
-## 🎮 Usage
+## Usage
 
 ### Basic Usage
 
