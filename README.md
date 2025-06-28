@@ -15,6 +15,8 @@ Tests: 42/50 ✅ 38 ❌ 3 ⏭️ 1
 
 _Nyan cat flying through your test results with a beautiful rainbow trail!_
 
+## IFKYK
+
 > Nyan Cat has always existed to bring happiness to people everywhere.
 
 _PRGuitarman - creator of NyanCat_
@@ -22,6 +24,8 @@ _PRGuitarman - creator of NyanCat_
 > Everybody... Everybody... Everybody wants to be a CAT!
 
 _The Aristocats_
+
+Inspired by the original [Nyan Cat](https://knowyourmeme.com/memes/nyan-cat). This one's for the ktties.
 
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -294,7 +298,3 @@ time pytest your_tests/ -q  # Standard output
 ## License
 
 MIT License - see LICENSE file for details.
-
-## Credits
-
-Inspired by the original [Nyan Cat](https://knowyourmeme.com/memes/nyan-cat). This one's for the ktties.
