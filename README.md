@@ -1,6 +1,10 @@
-# Nyan Pytest 🐱‍🚀
+# Nyan Pytest
 
-A delightful nyan-cat inspired pytest plugin that displays test results with a colorful nyan cat animation and rainbow trail.
+🐱‍🚀l🐱‍🚀l🐱‍🚀l🐱‍🚀l🐱‍🚀l🐱‍🚀l🐱‍🚀l🐱‍🚀l
+
+> Everybody... Everybody... Everybody wants to be a CAT! - Aristocats
+
+A delightful [nyan-cat](https://www.youtube.com/watch?v=2yJgwwDcgV8i) inspired pytest plugin that displays test results with a colorful nyan cat animation and rainbow trail.
 
 ```
 ====================================================================≈≈≈≈≈≈╭━━━━━━━━━━━━╮
@@ -18,7 +22,7 @@ _Nyan cat flying through your test results with a beautiful rainbow trail!_
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-## ✨ Features
+## Features
 
 - 🌈 **Animated rainbow trail** that grows with test progress
 - 🐱 **Adorable nyan cat** with paw animations
@@ -27,18 +31,10 @@ _Nyan cat flying through your test results with a beautiful rainbow trail!_
 - 🖥️ **Terminal compatibility** for both interactive and non-interactive environments
 - ⚡ **Performance optimized** for smooth animations
 
-## 🚀 Installation
+## Installation
 
 ```bash
 pip install nyan-pytest
-```
-
-For development:
-
-```bash
-git clone https://github.com/mrilikecoding/nyan-pytest
-cd nyan-pytest
-make setup
 ```
 
 ## 🎮 Usage
@@ -78,7 +74,7 @@ pytest --nyan-sim 30 --nyan-speed 15
 pytest --nyan-sim 30 --nyan-speed 50
 ```
 
-## 🎯 Command Line Options
+## Command Line Options
 
 | Option           | Description                                              |
 | ---------------- | -------------------------------------------------------- |
@@ -87,17 +83,7 @@ pytest --nyan-sim 30 --nyan-speed 50
 | `--nyan-sim N`   | Simulate N tests to demo the animation                   |
 | `--nyan-speed N` | Animation speed (1=fastest, 6=default, 100=slowest)      |
 
-### 🎛️ Speed Guide
-
-| Speed Range | Best For              | Description                                       |
-| ----------- | --------------------- | ------------------------------------------------- |
-| 1-3         | Fast unit tests       | Quick visual feedback, minimal distraction        |
-| 4-8         | Regular development   | Good balance of visibility and speed (default: 6) |
-| 10-25       | Watching tests run    | Comfortable viewing during test execution         |
-| 30-60       | Relaxed development   | Slow, enjoyable animation for longer test suites  |
-| 70-100      | Demos & presentations | Very slow, perfect for showing off to colleagues! |
-
-## 🎨 What You'll See
+## What You'll See
 
 When running tests, you'll see:
 
@@ -112,19 +98,82 @@ When running tests, you'll see:
 Tests: 15/20 ✅ 12 ❌ 2 ⏭️ 1
 ```
 
-- 🌈 **Rainbow trail** (`≈` characters) grows as tests complete
-- 🎭 **Animated poptart-cat body** with hearts (♥) and sprinkles (\*)
-- 🐾 **Moving paws** that animate during test execution
-- 📈 **Live statistics** showing progress and results
+- **Rainbow trail** (`≈` characters) grows as tests complete
+- **Animated poptart-cat body** with hearts (♥) and sprinkles (\*)
+- **Lil paws** that animate during test execution
+- **Live statistics** showing progress and results
+- More delightful enhancements to come! Performance is always a priority.
 
-## 🛠️ Development
+### Speed Guide
+
+| Speed Range | Best For              | Description                                       |
+| ----------- | --------------------- | ------------------------------------------------- |
+| 1-3         | Fast unit tests       | Quick visual feedback, minimal distraction        |
+| 4-8         | Regular development   | Good balance of visibility and speed (default: 6) |
+| 10-25       | Watching tests run    | Comfortable viewing during test execution         |
+| 30-60       | Relaxed development   | Slow, enjoyable animation for longer test suites  |
+| 70-100      | Demos & presentations | Very slow, perfect for showing off to colleagues! |
+
+## Performance Impact
+
+**TL;DR: The delight factor far outweighs the modest performance cost!**
+
+Nyan cat adds visual joy to your testing workflow with minimal impact on development productivity. Benchmarks show the animation overhead is essentially **constant (~2.3 seconds)** regardless of test count:
+
+### Benchmark Results
+
+| Test Count | Standard | Nyan Cat | Overhead | % Slower |
+| ---------- | -------- | -------- | -------- | -------- |
+| 10 tests   | 0.18s    | 2.41s    | +2.23s   | +1225%   |
+| 100 tests  | 1.26s    | 3.52s    | +2.27s   | +181%    |
+| 1000 tests | 11.97s   | 14.31s   | +2.33s   | +20%     |
+
+### Key Insights
+
+**Animation overhead is constant** - The ~2.3 second cost doesn't scale with test count  
+**Scales beautifully** - Larger test suites see proportionally less impact  
+**Negligible in practice** - 2-3 seconds is nothing compared to typical development workflows
+
+### Benchmark It Yourself
+
+See if this would be worth it for your application tests.
+
+```bash
+
+# Compare with your actual test suite
+time pytest your_tests/ --nyan-only
+time pytest your_tests/ -q  # Standard output
+```
+
+**Bottom line:** Unless you're running thousands of ultra-fast unit tests in tight development loops, nyan cat's constant ~2.3s overhead becomes increasingly negligible as your test suite grows. The joy, motivation, and visual feedback it provides make it a net positive for virtually any development workflow. **Adoption is strongly encouraged!** 🎉
+
+### When to Use Nyan Cat
+
+**Perfect for:**
+
+- **Dev workflows** - Makes test-watching enjoyable
+- **Medium to large test suites** - Reasonable overhead
+- **Demo environments** - Bring delight
+
+**Why the overhead is worth it:**
+
+- **Visual progress feedback** - Clear, delightful indication of test execution
+- **Fun is good** - Brings smiles to code reviews, standups, and demos
+- **Context matters** - 2.3s is negligible compared to compile times, network calls, or CI overhead
+
+## Development
 
 ### Quick Start
 
+For development:
+
 ```bash
-# Clone and setup
-git clone <repo-url>
+
+git clone https://github.com/mrilikecoding/nyan-pytest
+
 cd nyan-pytest
+
+# Setup dependencies
 make setup
 
 # Run tests
@@ -160,21 +209,20 @@ make setup
 
 ### Available Make Commands
 
-| Command              | Description                                    |
-| -------------------- | ---------------------------------------------- |
-| `make help`          | Show all available commands                    |
-| `make setup`         | Install dev dependencies                       |
-| `make test-nyan`     | Run tests with nyan output                     |
-| `make demo`          | Demo with 20 simulated tests                  |
-| `make party [TESTS=N]` | Configurable demo (default: 100 tests)      |
+| Command                                | Description                                        |
+| -------------------------------------- | -------------------------------------------------- |
+| `make help`                            | Show all available commands                        |
+| `make setup`                           | Install dev dependencies                           |
+| `make test-nyan`                       | Run tests with nyan output                         |
+| `make demo`                            | Demo with 20 simulated tests                       |
+| `make party [TESTS=N]`                 | Configurable demo (default: 100 tests)             |
 | `make performance [TESTS=N] [SPEED=N]` | Performance testing (defaults: 100 tests, speed 6) |
-| `make benchmark`     | Quick benchmark comparison                     |
-| `make lint`          | Check code quality                             |
-| `make format`        | Format code with black and ruff                |
-| `make build`         | Build package                                  |
-| `make clean`         | Clean build artifacts                          |
+| `make lint`                            | Check code quality                                 |
+| `make format`                          | Format code with black and ruff                    |
+| `make build`                           | Build package                                      |
+| `make clean`                           | Clean build artifacts                              |
 
-## 🎪 Examples
+## Examples
 
 ### Running Your Test Suite
 
@@ -192,9 +240,6 @@ pytest tests/ --nyan -v -s
 ### Performance Testing
 
 ```bash
-# Quick benchmark comparison
-make benchmark
-
 # Configurable performance testing
 make performance TESTS=50 SPEED=10    # 50 tests at speed 10
 make performance TESTS=1000           # 1000 tests at default speed 6
@@ -213,43 +258,6 @@ make party TESTS=200       # Epic 200-test party! 🎉
 make party                 # Default 100-test party
 ```
 
-## ⚡ Performance Impact
-
-**TL;DR: The delight factor far outweighs the modest performance cost!**
-
-Nyan cat adds visual joy to your testing workflow with minimal impact on development productivity. Benchmarks show the animation overhead is essentially **constant (~2.3 seconds)** regardless of test count:
-
-### Benchmark Results
-
-| Test Count | Standard | Nyan Cat | Overhead | % Slower |
-| ---------- | -------- | -------- | -------- | -------- |
-| 10 tests   | 0.18s    | 2.41s    | +2.23s   | +1225%   |
-| 100 tests  | 1.26s    | 3.52s    | +2.27s   | +181%    |
-| 1000 tests | 11.97s   | 14.31s   | +2.33s   | +20%     |
-
-### Key Insights
-
-🎯 **Animation overhead is constant** - The ~2.3 second cost doesn't scale with test count  
-📈 **Scales beautifully** - Larger test suites see proportionally less impact  
-⚡ **Negligible in practice** - 2-3 seconds is nothing compared to typical development workflows
-
-### When to Use Nyan Cat
-
-✅ **Perfect for:**
-
-- **Development workflows** - Makes test-watching enjoyable
-- **Medium to large test suites** - 20-180% overhead on 100-1000 tests
-- **CI/CD pipelines** - Minimal time vs overall build/deploy phases
-- **Demo environments** - Delights stakeholders and team members
-- **Any project where developer happiness matters**
-
-✅ **Why the overhead is worth it:**
-
-- **Developer motivation** - Transforms boring test runs into engaging experiences
-- **Visual progress feedback** - Clear, delightful indication of test execution
-- **Team morale boost** - Brings smiles to code reviews, standups, and demos
-- **Context matters** - 2.3s is negligible compared to compile times, network calls, or CI overhead
-
 ### Benchmark It Yourself
 
 ```bash
@@ -264,8 +272,6 @@ make performance TESTS=1000  # Large suite
 time pytest your_tests/ --nyan-only
 time pytest your_tests/ -q  # Standard output
 ```
-
-**Bottom line:** Unless you're running thousands of ultra-fast unit tests in tight development loops, nyan cat's constant ~2.3s overhead becomes increasingly negligible as your test suite grows. The joy, motivation, and visual feedback it provides make it a net positive for virtually any development workflow. **Adoption is strongly encouraged!** 🎉
 
 ## 🔧 Requirements
 
