@@ -187,6 +187,11 @@ class NyanReporter:
 
         self.started = False
         self.finished = False
+        
+        # Performance optimization: pre-compute colored frames to avoid repeated processing
+        self._colored_frames = self._precompute_colored_frames()
+        # Cache for rainbow segments to avoid repeated generation
+        self._rainbow_cache = {}
 
     def pytest_configure(self, config: pytest.Config) -> None:
         """Configure the plugin."""
@@ -224,6 +229,44 @@ class NyanReporter:
         # Update display
         self.update_display()
 
+    def _precompute_colored_frames(self) -> List[List[str]]:
+        """Pre-compute all colored frames to avoid repeated string operations."""
+        colored_frames = []
+        for frame in self.NYAN_FRAMES:
+            colored_frame = []
+            for line in frame:
+                colored_line = ""
+                for char in line:
+                    if char == "♥":
+                        colored_line += (
+                            f"{self.COLORS['bright_magenta']}{char}{self.COLORS['reset']}"
+                        )
+                    elif char == "*":
+                        colored_line += (
+                            f"{self.COLORS['bright_yellow']}{char}{self.COLORS['reset']}"
+                        )
+                    else:
+                        colored_line += char
+                colored_frame.append(colored_line)
+            colored_frames.append(colored_frame)
+        return colored_frames
+
+    def _get_rainbow_segment(self, line_idx: int, trail_length: int, tick: int) -> str:
+        """Get cached rainbow segment or compute if not cached."""
+        cache_key = (line_idx, trail_length, tick % len(self.RAINBOW_COLORS))
+        if cache_key not in self._rainbow_cache:
+            if trail_length == 0:
+                self._rainbow_cache[cache_key] = ""
+            else:
+                # Use join instead of concatenation for better performance
+                rainbow_chars = []
+                for j in range(trail_length):
+                    color_idx = (j + line_idx + tick) % len(self.RAINBOW_COLORS)
+                    color = self.RAINBOW_COLORS[color_idx]
+                    rainbow_chars.append(f"{self.COLORS[color]}={self.COLORS['reset']}")
+                self._rainbow_cache[cache_key] = ''.join(rainbow_chars)
+        return self._rainbow_cache[cache_key]
+
     def update_display(self) -> None:
         """Update the display."""
         if not self.interactive or self.finished:
@@ -234,50 +277,36 @@ class NyanReporter:
             progress = min(1.0, (self.passed + self.failed + self.skipped) / self.total)
             self.trail_length = int(progress * self.max_trail_length)
 
-        # Frame animation
-        frame = self.NYAN_FRAMES[self.tick % len(self.NYAN_FRAMES)]
+        # Get pre-computed colored frame
+        frame_idx = self.tick % len(self._colored_frames)
+        colored_frame = self._colored_frames[frame_idx]
         self.tick += 1
 
-        # Restore cursor position and clear screen
-        sys.stdout.write(self.RESTORE_CURSOR)
-        sys.stdout.write(self.CLEAR_SCREEN)
+        # Build entire output as a list then join (more efficient than multiple writes)
+        output_lines = [self.RESTORE_CURSOR, self.CLEAR_SCREEN]
 
         # Draw rainbow trail and nyan cat
-        for i, line in enumerate(frame):
-            rainbow_segment = ""
+        for i, colored_line in enumerate(colored_frame):
             if 0 <= i <= 8:  # Draw rainbow on all body lines including paws
-                for j in range(self.trail_length):
-                    color_idx = (j + i + self.tick) % len(self.RAINBOW_COLORS)
-                    color = self.RAINBOW_COLORS[color_idx]
-                    rainbow_segment += f"{self.COLORS[color]}={self.COLORS['reset']}"
+                rainbow_segment = self._get_rainbow_segment(i, self.trail_length, self.tick)
+            else:
+                rainbow_segment = ""
 
-            # Apply colors to specific characters in the line
-            colored_line = ""
-            for char in line:
-                if char == "♥":
-                    colored_line += (
-                        f"{self.COLORS['bright_magenta']}{char}{self.COLORS['reset']}"
-                    )
-                elif char == "*":
-                    colored_line += (
-                        f"{self.COLORS['bright_yellow']}{char}{self.COLORS['reset']}"
-                    )
-                else:
-                    colored_line += char
+            # Add the line with rainbow trail and pre-colored characters
+            output_lines.append(f"{rainbow_segment}{colored_line}\n")
 
-            # Print the line with rainbow trail and colored characters
-            sys.stdout.write(f"{rainbow_segment}{colored_line}\n")
-
-        # Print stats
+        # Add stats
         status = (
-            f"Tests: {self.passed + self.failed + self.skipped}/{self.total} "
-            f"✅ {self.passed} ❌ {self.failed} ⏭️  {self.skipped}"
+            f"\nTests: {self.passed + self.failed + self.skipped}/{self.total} "
+            f"✅ {self.passed} ❌ {self.failed} ⏭️  {self.skipped}\n"
         )
-        sys.stdout.write(f"\n{status}\n")
+        output_lines.append(status)
+        
+        # Single write operation for all output
+        sys.stdout.write(''.join(output_lines))
         sys.stdout.flush()
 
-        # Slow down animation to reduce CPU usage
-        time.sleep(0.1)
+        # Animation speed now driven by test execution rate
 
     def pytest_terminal_summary(self, terminalreporter: Any, exitstatus: int) -> None:
         """Called at the end of the test session."""
@@ -415,8 +444,8 @@ def simulate_tests(session, num_tests, reporter):
         # Update reporter with mock report
         reporter.pytest_runtest_logreport(MockReport())
 
-        # Slow down simulation to make it visible (faster than real tests would run)
-        time.sleep(0.02)
+        # Simulate typical test execution time (10ms)
+        time.sleep(0.01)
 
     # Let the animation complete
     time.sleep(1)

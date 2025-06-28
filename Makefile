@@ -56,12 +56,8 @@ check: ## Run all checks (lint + format check)
 	mypy src/
 
 # Performance testing
-performance: ## Run performance tests and benchmarks
-	@echo "Running performance test with timing..."
-	time python -m pytest tests/ --nyan-only -q
-	@echo ""
-	@echo "Running simulation performance test..."
-	time python -m pytest --nyan-sim 50
+performance: ## Compare nyan vs standard pytest performance. Usage: make performance TESTS=50 (default: 100)
+	python scripts/performance.py $(or $(TESTS),100)
 
 benchmark: ## Benchmark the plugin performance
 	@echo "Benchmarking nyan vs standard reporter..."
@@ -99,4 +95,5 @@ nyan-stats: ## Show nyan cat in action with real test statistics
 	@echo "Running all tests with nyan cat reporter..."
 	python -m pytest tests/ --nyan-only -v
 
-party: demo-epic ## 🎉 Epic nyan cat party!
+party: ## 🎉 Nyan cat party! Usage: make party TESTS=50 (default: 100)
+	python -m pytest --nyan-sim $(or $(TESTS),100)
