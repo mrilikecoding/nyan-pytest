@@ -6,6 +6,8 @@ import time
 import pytest
 from typing import Dict, List, Optional, Tuple, Any
 
+from .frames import NYAN_FRAMES, RAINBOW_COLORS
+
 TERM_WIDTH = 80
 try:
     # Get terminal width if supported
@@ -62,108 +64,6 @@ class NyanReporter:
     # Restore cursor position
     RESTORE_CURSOR = "\033[u"
 
-    # Rainbow colors for the trail
-    RAINBOW_COLORS = ["red", "yellow", "green", "cyan", "blue", "magenta"]
-
-    # Nyan cat frames with consistent head position and moving paws
-    NYAN_FRAMES = [
-        [
-            "≈≈╭━━━━━━━━━━━━╮",
-            "≈╭┫ ♥ * ♥ * ♥ *┃ ╮ ╮",
-            "≈┃┃* ♥ * ♥ * ♥ ┃(^ᴥ^)",
-            "≈-┫ ♥ * ♥ * ♥ *┣╯",
-            "≈≈╰━━━━━━━━━━━━╯",
-            "≈≈≈  ╰┛ ╰┛ ╰┛ ╰┛",
-        ],
-        [
-            "≈≈≈╭━━━━━━━━━━━━╮",
-            "≈≈╭┫ ♥ * ♥ * ♥ *┃ ╮ ╮",
-            "≈≈┃┃* ♥ * ♥ * ♥ ┃(^ᴥ^)",
-            "≈≈-┫ ♥ * ♥ * ♥ *┣╯",
-            "≈≈≈╰━━━━━━━━━━━━╯",
-            "≈≈≈≈╰┛ ╰┛  ╰┛ ╰┛",
-        ],
-        [
-            "≈≈≈≈╭━━━━━━━━━━━━╮",
-            "≈≈≈╭┫ ♥ * ♥ * ♥ *┣╮ ╮",
-            "≈≈≈┃┃* ♥ * ♥ * ♥ (^ᴥ^)",
-            "≈≈≈-┫ ♥ * ♥ * ♥ *┣ ",
-            "≈≈≈≈╰━━━━━━━━━━━━╯",
-            "≈≈≈≈≈╰┛ ╰┛ ╰┛ ╰┛",
-        ],
-        [
-            "≈≈≈≈≈╭━━━━━━━━━━━━╮",
-            "≈≈≈≈╭┫ ♥ * ♥ * ♥ *┣╮ ╮",
-            "≈≈≈≈┃┃* ♥ * ♥ * ♥ (^ᴥ^)",
-            "≈≈≈≈-┫ ♥ * ♥ * ♥ *┣╯",
-            "≈≈≈≈≈╰━━━━━━━━━━━━╯",
-            "≈≈≈≈≈╰┛ ╰┛  ╰┛ ╰┛",
-        ],
-        [
-            "≈≈≈≈≈≈╭━━━━━━━━━━━━╮",
-            "≈≈≈≈≈╭┫ ♥ * ♥ * ♥ *┃ ╮ ╮",
-            "≈≈≈≈≈┃┃* ♥ * ♥ * ♥ ┃(^ᴥ^)",
-            "≈≈≈≈≈-┫ ♥ * ♥ * ♥ *┣╯",
-            "≈≈≈≈≈≈╰━━━━━━━━━━━━╯",
-            "≈≈≈≈≈≈  ╰┛ ╰┛ ╰┛ ╰┛",
-        ],
-        [
-            "≈≈≈≈≈≈╭━━━━━━━━━━━━╮",
-            "≈≈≈≈≈╭┫ ♥ * ♥ * ♥ *┃ ╮ ╮",
-            "≈≈≈≈≈┃┃* ♥ * ♥ * ♥ ┃(^ᴥ^)",
-            "≈≈≈≈≈-┫ ♥ * ♥ * ♥ *┣╯",
-            "≈≈≈≈≈≈╰━━━━━━━━━━━━╯",
-            "≈≈≈≈≈≈≈ ╰┛ ╰┛  ╰┛ ╰┛",
-        ],
-        [
-            "≈≈≈≈≈≈╭━━━━━━━━━━━━╮",
-            "≈≈≈≈≈╭┫ ♥ * ♥ * ♥ *┣╮ ╮",
-            "≈≈≈≈≈┃┃* ♥ * ♥ * ♥ (^ᴥ^)",
-            "≈≈≈≈≈-┫ ♥ * ♥ * ♥ *┣ ",
-            "≈≈≈≈≈≈╰━━━━━━━━━━━━╯",
-            "≈≈≈≈≈≈≈╰┛ ╰┛ ╰┛ ╰┛",
-        ],
-        [
-            "≈≈≈≈≈≈╭━━━━━━━━━━━━╮",
-            "≈≈≈≈≈╭┫ ♥ * ♥ * ♥ *┣╮ ╮",
-            "≈≈≈≈≈┃┃* ♥ * ♥ * ♥ (^ᴥ^)",
-            "≈≈≈≈≈-┫ ♥ * ♥ * ♥ *┣╯",
-            "≈≈≈≈≈≈╰━━━━━━━━━━━━╯",
-            "≈≈≈≈≈≈╰┛ ╰┛  ╰┛ ╰┛",
-        ],
-        [
-            "≈≈≈≈≈≈╭━━━━━━━━━━━━╮",
-            "≈≈≈≈≈╭┫ ♥ * ♥ * ♥ *┃ ╮ ╮",
-            "≈≈≈≈≈┃┃* ♥ * ♥ * ♥ ┃(^ᴥ^)",
-            "≈≈≈≈≈-┫ ♥ * ♥ * ♥ *┣╯",
-            "≈≈≈≈≈≈╰━━━━━━━━━━━━╯",
-            "≈≈≈≈≈≈  ╰┛ ╰┛ ╰┛ ╰┛",
-        ],
-        [
-            "≈≈≈≈≈╭━━━━━━━━━━━━╮",
-            "≈≈≈≈╭┫ ♥ * ♥ * ♥ *┃ ╮ ╮",
-            "≈≈≈≈┃┃* ♥ * ♥ * ♥ ┃(^ᴥ^)",
-            "≈≈≈≈-┫ ♥ * ♥ * ♥ *┣╯",
-            "≈≈≈≈≈╰━━━━━━━━━━━━╯",
-            "≈≈≈≈≈≈ ╰┛ ╰┛  ╰┛ ╰┛",
-        ],
-        [
-            "≈≈≈╭━━━━━━━━━━━━╮",
-            "≈≈╭┫ ♥ * ♥ * ♥ *┣╮ ╮",
-            "≈≈┃┃* ♥ * ♥ * ♥ (^ᴥ^)",
-            "≈≈-┫ ♥ * ♥ * ♥ *┣ ",
-            "≈≈≈╰━━━━━━━━━━━━╯",
-            "≈≈≈≈╰┛ ╰┛ ╰┛ ╰┛",
-        ],
-        [
-            "≈≈╭━━━━━━━━━━━━╮",
-            "≈╭┫ ♥ * ♥ * ♥ *┣╮ ╮",
-            "≈┃┃* ♥ * ♥ * ♥ (^ᴥ^)",
-            "≈-┫ ♥ * ♥ * ♥ *┣╯",
-            "≈≈╰━━━━━━━━━━━━╯",
-            "≈≈╰┛ ╰┛  ╰┛ ╰┛",
-        ],
-    ]
 
     def __init__(self, config: pytest.Config) -> None:
         """Initialize the reporter."""
@@ -232,7 +132,7 @@ class NyanReporter:
     def _precompute_colored_frames(self) -> List[List[str]]:
         """Pre-compute all colored frames to avoid repeated string operations."""
         colored_frames = []
-        for frame in self.NYAN_FRAMES:
+        for frame in NYAN_FRAMES:
             colored_frame = []
             for line in frame:
                 colored_line = ""
@@ -253,7 +153,7 @@ class NyanReporter:
 
     def _get_rainbow_segment(self, line_idx: int, trail_length: int, tick: int) -> str:
         """Get cached rainbow segment or compute if not cached."""
-        cache_key = (line_idx, trail_length, tick % len(self.RAINBOW_COLORS))
+        cache_key = (line_idx, trail_length, tick % len(RAINBOW_COLORS))
         if cache_key not in self._rainbow_cache:
             if trail_length == 0:
                 self._rainbow_cache[cache_key] = ""
@@ -261,8 +161,8 @@ class NyanReporter:
                 # Use join instead of concatenation for better performance
                 rainbow_chars = []
                 for j in range(trail_length):
-                    color_idx = (j + line_idx + tick) % len(self.RAINBOW_COLORS)
-                    color = self.RAINBOW_COLORS[color_idx]
+                    color_idx = (j + line_idx + tick) % len(RAINBOW_COLORS)
+                    color = RAINBOW_COLORS[color_idx]
                     rainbow_chars.append(f"{self.COLORS[color]}={self.COLORS['reset']}")
                 self._rainbow_cache[cache_key] = ''.join(rainbow_chars)
         return self._rainbow_cache[cache_key]
@@ -318,7 +218,7 @@ class NyanReporter:
             sys.stdout.write(self.CLEAR_SCREEN)
 
             # Draw a victory frame with full rainbow
-            frame = self.NYAN_FRAMES[0]  # Use the first frame for the final display
+            frame = NYAN_FRAMES[0]  # Use the first frame for the final display
 
             # Set trail length to maximum for a complete rainbow
             self.trail_length = self.max_trail_length
@@ -328,8 +228,8 @@ class NyanReporter:
                 rainbow_segment = ""
                 if 0 <= i <= 8:  # Draw rainbow on all body lines including paws
                     for j in range(self.trail_length):
-                        color_idx = (j + i) % len(self.RAINBOW_COLORS)
-                        color = self.RAINBOW_COLORS[color_idx]
+                        color_idx = (j + i) % len(RAINBOW_COLORS)
+                        color = RAINBOW_COLORS[color_idx]
                         rainbow_segment += (
                             f"{self.COLORS[color]}={self.COLORS['reset']}"
                         )
