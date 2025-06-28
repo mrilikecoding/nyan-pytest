@@ -19,6 +19,9 @@ install: ## Install package in development mode
 test: ## Run tests with standard pytest output
 	pytest tests/ -v
 
+test-plugin: ## Run plugin-specific tests
+	pytest tests/test_plugin.py -v
+
 test-nyan: ## Run tests with nyan cat reporter
 	pytest tests/ --nyan -v
 
@@ -56,8 +59,8 @@ check: ## Run all checks (lint + format check)
 	mypy src/
 
 # Performance testing
-performance: ## Compare nyan vs standard pytest performance. Usage: make performance TESTS=50 (default: 100)
-	python scripts/performance.py $(or $(TESTS),100)
+performance: ## Compare nyan vs standard pytest performance. Usage: make performance TESTS=50 SPEED=10 (defaults: 100 tests, speed 6)
+	python scripts/performance.py $(or $(TESTS),100) $(or $(SPEED),6)
 
 benchmark: ## Benchmark the plugin performance
 	@echo "Benchmarking nyan vs standard reporter..."

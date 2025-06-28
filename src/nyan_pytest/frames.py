@@ -105,5 +105,8 @@ NYAN_FRAMES = [
 ]
 
 
+# Animation speed control
+ANIMATION_SPEED_DIVISOR = 6  # Higher values = slower animation
+
 # Rainbow colors for the trail
 RAINBOW_COLORS = ["red", "yellow", "green", "cyan", "blue", "magenta"]

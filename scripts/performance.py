@@ -28,12 +28,12 @@ def run_standard_simulation(num_tests: int) -> tuple[float, int]:
     return elapsed, num_tests
 
 
-def run_nyan_simulation(num_tests: int) -> tuple[float, int]:
+def run_nyan_simulation(num_tests: int, speed: int = 6) -> tuple[float, int]:
     """Run nyan simulation with full animation."""
-    print(f"\n2. Nyan pytest simulation ({num_tests} tests - with animation):")
+    print(f"\n2. Nyan pytest simulation ({num_tests} tests - with animation, speed={speed}):")
     
     start = time.time()
-    result = subprocess.run(['python', '-m', 'pytest', '--nyan-sim', str(num_tests)])
+    result = subprocess.run(['python', '-m', 'pytest', '--nyan-sim', str(num_tests), '--nyan-speed', str(speed)])
     elapsed = time.time() - start
     
     avg_ms = (elapsed / num_tests) * 1000
@@ -61,15 +61,17 @@ def main():
     """Main performance comparison function."""
     # Get number of tests from command line or default to 100
     num_tests = int(sys.argv[1]) if len(sys.argv) > 1 else 100
+    # Get speed from command line or default to 6
+    speed = int(sys.argv[2]) if len(sys.argv) > 2 else 6
     
-    print(f"Performance comparison: {num_tests} simulated tests")
-    print("=" * 42)
+    print(f"Performance comparison: {num_tests} simulated tests (speed={speed})")
+    print("=" * 50)
     
     # Run standard simulation
     std_time, std_tests = run_standard_simulation(num_tests)
     
     # Run nyan simulation
-    nyan_time, nyan_tests = run_nyan_simulation(num_tests)
+    nyan_time, nyan_tests = run_nyan_simulation(num_tests, speed)
     
     # Print comparison
     print_comparison(std_time, std_tests, nyan_time, nyan_tests)

@@ -54,6 +54,15 @@ pytest --nyan-sim 20
 
 # Epic demo with 100 tests
 pytest --nyan-sim 100
+
+# Fast animation demo
+pytest --nyan-sim 30 --nyan-speed 2
+
+# Moderate speed
+pytest --nyan-sim 30 --nyan-speed 15
+
+# Slow, relaxing animation
+pytest --nyan-sim 30 --nyan-speed 50
 ```
 
 ### Makefile Commands
@@ -82,11 +91,22 @@ make setup
 
 ## 🎯 Command Line Options
 
-| Option         | Description                                              |
-| -------------- | -------------------------------------------------------- |
-| `--nyan`       | Enable nyan cat reporter alongside default pytest output |
-| `--nyan-only`  | Use only nyan cat reporter (no standard pytest output)   |
-| `--nyan-sim N` | Simulate N tests to demo the animation                   |
+| Option            | Description                                              |
+| ----------------- | -------------------------------------------------------- |
+| `--nyan`          | Enable nyan cat reporter alongside default pytest output |
+| `--nyan-only`     | Use only nyan cat reporter (no standard pytest output)   |
+| `--nyan-sim N`    | Simulate N tests to demo the animation                   |
+| `--nyan-speed N`  | Animation speed (1=fastest, 6=default, 100=slowest)     |
+
+### 🎛️ Speed Guide
+
+| Speed Range | Best For | Description |
+|-------------|----------|-------------|
+| 1-3 | Fast unit tests | Quick visual feedback, minimal distraction |
+| 4-8 | Regular development | Good balance of visibility and speed (default: 6) |
+| 10-25 | Watching tests run | Comfortable viewing during test execution |
+| 30-60 | Relaxed development | Slow, enjoyable animation for longer test suites |
+| 70-100 | Demos & presentations | Very slow, perfect for showing off to colleagues! |
 
 ## 🎨 What You'll See
 

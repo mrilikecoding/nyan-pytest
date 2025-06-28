@@ -6,7 +6,7 @@ import time
 import pytest
 from typing import Dict, List, Optional, Tuple, Any
 
-from .frames import NYAN_FRAMES, RAINBOW_COLORS
+from .frames import NYAN_FRAMES, RAINBOW_COLORS, ANIMATION_SPEED_DIVISOR
 
 TERM_WIDTH = 80
 try:
@@ -69,6 +69,7 @@ class NyanReporter:
         """Initialize the reporter."""
         self.config = config
         self.nyan_only = config.getoption("--nyan-only")
+        self.animation_speed = config.getoption("--nyan-speed")
         self.interactive = is_interactive_terminal()
         self.width = min(TERM_WIDTH, 80)
 
@@ -151,9 +152,9 @@ class NyanReporter:
             colored_frames.append(colored_frame)
         return colored_frames
 
-    def _get_rainbow_segment(self, line_idx: int, trail_length: int, tick: int) -> str:
+    def _get_rainbow_segment(self, line_idx: int, trail_length: int, animation_tick: int) -> str:
         """Get cached rainbow segment or compute if not cached."""
-        cache_key = (line_idx, trail_length, tick % len(RAINBOW_COLORS))
+        cache_key = (line_idx, trail_length, animation_tick % len(RAINBOW_COLORS))
         if cache_key not in self._rainbow_cache:
             if trail_length == 0:
                 self._rainbow_cache[cache_key] = ""
@@ -161,11 +162,24 @@ class NyanReporter:
                 # Use join instead of concatenation for better performance
                 rainbow_chars = []
                 for j in range(trail_length):
-                    color_idx = (j + line_idx + tick) % len(RAINBOW_COLORS)
+                    color_idx = (j + line_idx + animation_tick) % len(RAINBOW_COLORS)
                     color = RAINBOW_COLORS[color_idx]
                     rainbow_chars.append(f"{self.COLORS[color]}={self.COLORS['reset']}")
                 self._rainbow_cache[cache_key] = ''.join(rainbow_chars)
         return self._rainbow_cache[cache_key]
+
+    def get_current_frame_index(self) -> int:
+        """Get the current frame index based on tick and animation speed.
+        
+        This method encapsulates the frame selection logic for easier testing.
+        """
+        animation_tick = self.tick // self.animation_speed
+        frame_idx = animation_tick % len(self._colored_frames)
+        return frame_idx
+
+    def get_current_animation_tick(self) -> int:
+        """Get the current animation tick (speed-adjusted tick)."""
+        return self.tick // self.animation_speed
 
     def update_display(self) -> None:
         """Update the display."""
@@ -177,8 +191,9 @@ class NyanReporter:
             progress = min(1.0, (self.passed + self.failed + self.skipped) / self.total)
             self.trail_length = int(progress * self.max_trail_length)
 
-        # Get pre-computed colored frame
-        frame_idx = self.tick % len(self._colored_frames)
+        # Get current frame and animation state
+        frame_idx = self.get_current_frame_index()
+        animation_tick = self.get_current_animation_tick()
         colored_frame = self._colored_frames[frame_idx]
         self.tick += 1
 
@@ -188,7 +203,7 @@ class NyanReporter:
         # Draw rainbow trail and nyan cat
         for i, colored_line in enumerate(colored_frame):
             if 0 <= i <= 8:  # Draw rainbow on all body lines including paws
-                rainbow_segment = self._get_rainbow_segment(i, self.trail_length, self.tick)
+                rainbow_segment = self._get_rainbow_segment(i, self.trail_length, animation_tick)
             else:
                 rainbow_segment = ""
 
@@ -273,6 +288,13 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         type=int,
         default=0,
         help="Simulate nyan cat animation with specified number of tests",
+    )
+    group.addoption(
+        "--nyan-speed",
+        metavar="SPEED",
+        type=int,
+        default=6,
+        help="Animation speed (1=fastest, 6=default, 100=slowest)",
     )
 
 
