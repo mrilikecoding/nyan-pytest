@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.5] - 2025-06-28
 
 ### Added
+
 - **Animation Speed Control**: New `--nyan-speed` parameter (1-100) to control animation speed
   - 1 = fastest, 6 = default, 100 = slowest
   - Speed affects both nyan cat frames and rainbow trail animation
@@ -31,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Shows timing statistics and overhead analysis
 
 ### Performance Improvements
+
 - **Major Speed Optimization**: Removed blocking `time.sleep(0.1)` delay
   - Reduced overhead from ~10s to ~2.3s for 100 tests
   - Animation now driven by test execution rate instead of artificial delays
@@ -40,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Eliminated multiple small stdout writes per frame update
 
 ### Enhanced
+
 - **Animation Quality**: Improved frame selection algorithm
   - Refactored frame selection into testable methods
   - Synchronized rainbow trail with nyan cat animation
@@ -50,6 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Individual developer perspective (removed "we" language)
 
 ### Fixed
+
 - **Simulation Exit**: Fixed pytest internal error during simulation mode
   - Replaced `exit(0)` with proper `pytest.exit()` call
   - Added proper exit status handling
@@ -58,6 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Cleaned up egg-info directories from git tracking
 
 ### Technical Details
+
 - **Frame Selection Logic**: Implemented efficient speed-based frame calculation
   ```python
   animation_tick = self.tick // self.animation_speed
@@ -68,5 +73,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Animation Frames**: 12 unique nyan cat poses with 6 lines each
 
 ## [0.1.4] - Previous Release
+
 - Initial performance optimizations
 - Basic nyan cat animation implementation
+
+## [pre-0.1.4]
+
+- What are you even doing here?
