@@ -81,10 +81,10 @@ clean: ## Clean build artifacts
 	find . -type f -name "*.pyc" -delete
 
 upload-test: ## Upload to test PyPI
-	twine upload --repository testpypi dist/*
+	twine upload --repository testpypi dist/* --skip-existing
 
 upload: ## Upload to PyPI
-	twine upload dist/*
+	twine upload dist/* --skip-existing
 
 # Development workflow
 dev-install: clean install ## Clean install for development

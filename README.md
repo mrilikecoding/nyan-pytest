@@ -36,7 +36,7 @@ pip install nyan-pytest
 For development:
 
 ```bash
-git clone https://github.com/your-repo/nyan-pytest
+git clone https://github.com/mrilikecoding/nyan-pytest
 cd nyan-pytest
 make setup
 ```
@@ -148,14 +148,11 @@ make help
 # Run tests with nyan cat
 make test-nyan
 
-# Quick demo
-make demo
+# Demo with configurable test count
+make party TESTS=50
 
-# Epic party mode! 🎉
-make party
-
-# Performance benchmarking
-make benchmark
+# Performance benchmarking with configurable params
+make performance TESTS=100 SPEED=6
 
 # Development setup
 make setup
@@ -163,16 +160,19 @@ make setup
 
 ### Available Make Commands
 
-| Command            | Description                  |
-| ------------------ | ---------------------------- |
-| `make setup`       | Install dev dependencies     |
-| `make test-nyan`   | Run tests with nyan output   |
-| `make demo`        | Demo with 20 simulated tests |
-| `make performance` | Run performance benchmarks   |
-| `make lint`        | Check code quality           |
-| `make format`      | Format code                  |
-| `make build`       | Build package                |
-| `make clean`       | Clean build artifacts        |
+| Command              | Description                                    |
+| -------------------- | ---------------------------------------------- |
+| `make help`          | Show all available commands                    |
+| `make setup`         | Install dev dependencies                       |
+| `make test-nyan`     | Run tests with nyan output                     |
+| `make demo`          | Demo with 20 simulated tests                  |
+| `make party [TESTS=N]` | Configurable demo (default: 100 tests)      |
+| `make performance [TESTS=N] [SPEED=N]` | Performance testing (defaults: 100 tests, speed 6) |
+| `make benchmark`     | Quick benchmark comparison                     |
+| `make lint`          | Check code quality                             |
+| `make format`        | Format code with black and ruff                |
+| `make build`         | Build package                                  |
+| `make clean`         | Clean build artifacts                          |
 
 ## 🎪 Examples
 
@@ -192,27 +192,25 @@ pytest tests/ --nyan -v -s
 ### Performance Testing
 
 ```bash
-# Benchmark nyan vs standard reporter
+# Quick benchmark comparison
 make benchmark
 
-# Time the plugin performance
-make performance
+# Configurable performance testing
+make performance TESTS=50 SPEED=10    # 50 tests at speed 10
+make performance TESTS=1000           # 1000 tests at default speed 6
+make performance                      # Default: 100 tests, speed 6
 ```
 
 ### Demo Modes
 
 ```bash
-# Quick 10-test demo
-make demo-fast
-
 # Standard 20-test demo
 make demo
 
-# Longer 50-test demo
-make demo-slow
-
-# Epic 100-test party! 🎉
-make party
+# Custom party mode with configurable test count
+make party TESTS=50        # 50-test party
+make party TESTS=200       # Epic 200-test party! 🎉
+make party                 # Default 100-test party
 ```
 
 ## ⚡ Performance Impact
