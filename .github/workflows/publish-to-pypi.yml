@@ -92,7 +92,7 @@ jobs:
         if [ -z "$PYPI_TEST_API_KEY" ]; then
           echo "WARNING: PYPI_TEST_API_KEY is empty, skipping TestPyPI upload"
         else
-          twine upload --repository testpypi dist/* -u "__token__" -p "$PYPI_TEST_API_KEY" --verbose || echo "TestPyPI upload failed, continuing workflow"
+          twine upload --repository testpypi dist/* -u "__token__" -p "$PYPI_TEST_API_KEY" --verbose --skip-existing || echo "TestPyPI upload failed, continuing workflow"
         fi
 
     - name: Publish to PyPI
@@ -105,5 +105,5 @@ jobs:
           exit 1
         fi
         
-        twine upload dist/* -u "__token__" -p "$PYPI_API_KEY" --verbose
+        twine upload dist/* -u "__token__" -p "$PYPI_API_KEY" --verbose --skip-existing
         echo "Successfully published to PyPI"
