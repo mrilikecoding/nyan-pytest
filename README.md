@@ -78,30 +78,6 @@ pytest --nyan-sim 30 --nyan-speed 15
 pytest --nyan-sim 30 --nyan-speed 50
 ```
 
-### Makefile Commands
-
-This project includes a comprehensive Makefile for development:
-
-```bash
-# Show all available commands
-make help
-
-# Run tests with nyan cat
-make test-nyan
-
-# Quick demo
-make demo
-
-# Epic party mode! 🎉
-make party
-
-# Performance benchmarking
-make benchmark
-
-# Development setup
-make setup
-```
-
 ## 🎯 Command Line Options
 
 | Option           | Description                                              |
@@ -137,7 +113,7 @@ Tests: 15/20 ✅ 12 ❌ 2 ⏭️ 1
 ```
 
 - 🌈 **Rainbow trail** (`≈` characters) grows as tests complete
-- 🎭 **Animated cat body** with hearts (♥) and stars (\*)
+- 🎭 **Animated poptart-cat body** with hearts (♥) and sprinkles (\*)
 - 🐾 **Moving paws** that animate during test execution
 - 📈 **Live statistics** showing progress and results
 
@@ -159,6 +135,30 @@ make lint
 
 # Try the demo
 make demo
+```
+
+### Makefile Commands
+
+This project includes a comprehensive Makefile for development:
+
+```bash
+# Show all available commands
+make help
+
+# Run tests with nyan cat
+make test-nyan
+
+# Quick demo
+make demo
+
+# Epic party mode! 🎉
+make party
+
+# Performance benchmarking
+make benchmark
+
+# Development setup
+make setup
 ```
 
 ### Available Make Commands
