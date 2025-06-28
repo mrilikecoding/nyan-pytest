@@ -1,10 +1,16 @@
 # Nyan Pytest
 
-🐱‍🚀l🐱‍🚀l🐱‍🚀l🐱‍🚀l🐱‍🚀l🐱‍🚀l🐱‍🚀l🐱‍🚀l
+> Nyan Cat has always existed to bring happiness to people everywhere.
 
-> Everybody... Everybody... Everybody wants to be a CAT! - Aristocats
+_PRGuitarman - creator of NyanCat_
+
+> Everybody... Everybody... Everybody wants to be a CAT!
+
+_The Aristocats_
 
 A delightful [nyan-cat](https://www.youtube.com/watch?v=2yJgwwDcgV8i) inspired pytest plugin that displays test results with a colorful nyan cat animation and rainbow trail.
+
+Nyan Cat is a delightful cat with a poptart body flying through space! What could be finer?
 
 ```
 ====================================================================≈≈≈≈≈≈╭━━━━━━━━━━━━╮
@@ -279,7 +285,7 @@ time pytest your_tests/ -q  # Standard output
 - pytest 6.0.0+
 - Terminal with ANSI color support (most modern terminals)
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature-name`
@@ -287,10 +293,10 @@ time pytest your_tests/ -q  # Standard output
 4. Run the full test suite: `make full-check`
 5. Submit a pull request
 
-## 📝 License
+## License
 
 MIT License - see LICENSE file for details.
 
-## 🎉 Credits
+## Credits
 
-Inspired by the original Nyan Cat. This one's for the ktties.
+Inspired by the original [Nyan Cat](https://knowyourmeme.com/memes/nyan-cat). This one's for the ktties.
